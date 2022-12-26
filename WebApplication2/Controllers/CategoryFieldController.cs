@@ -23,6 +23,13 @@ namespace WebApplication2.Controllers
             return new ObjectResult(fields);
         }
 
+        [HttpGet("GetAllFieldsByCategoryId")]
+        public async Task<IActionResult> GetAllFieldsByCategoryId([FromQuery] int categoryId)
+        {
+            var fields = await _dbContext.CategoryFields.Where(cf => cf.CategoryId == categoryId).ToListAsync();
+            return new ObjectResult(fields);
+        }
+
         [HttpGet("GetFieldById")]
         public async Task<IActionResult> GetFieldById([FromQuery] int id)
         {

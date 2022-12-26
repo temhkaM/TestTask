@@ -10,7 +10,6 @@ namespace WebApplication2.Models
         public int Id { get; set; } = default;
 
         [Required]
-        [MaxLength(12, ErrorMessage = "Строка должна быть короче 12 символов")]
         public string FieldName { get; set; }
 
         [ForeignKey(nameof(Category))]

@@ -11,13 +11,11 @@ namespace WebApplication2.Models
         public int Id { get; set; }
 
         [Required]
-        [MaxLength(24, ErrorMessage = "Строка должна быть короче 50 символов")]
         public string Name { get; set; }
 
         [Required]
         public decimal Price { get; set; }
 
-        [MaxLength(100, ErrorMessage = "Строка должна быть короче 100 символов")]
         public string? Description { get; set; }
 
         [ForeignKey(nameof(Category))]

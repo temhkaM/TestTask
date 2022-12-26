@@ -49,8 +49,8 @@ namespace WebApplication2.Controllers
             return new ObjectResult(productsWithFields);
         }
 
-        [HttpGet("GetAllProductsFilterByCategory")]
-        public async Task<IActionResult> GetAllProductsFilterByCategory(int filter)
+        [HttpGet("GetAllProductsFilterByCategoryId")]
+        public async Task<IActionResult> GetAllProductsFilterByCategory([FromQuery] int categoryId)
         {
             var products = await _dbContext.Products.ToListAsync();
 
@@ -58,7 +58,7 @@ namespace WebApplication2.Controllers
 
             foreach (var prod in products)
             {
-                if (prod.CategoryId == filter)
+                if (prod.CategoryId == categoryId)
                 {
                     var categoryData = await _dbContext.Categories.FirstOrDefaultAsync(c1 => c1.Id == prod.CategoryId);
                     var fieldData = await _dbContext.ProductCategoryFields.Where(pcf => pcf.ProductId == prod.Id).Include(pcf => pcf.CategoryField).ToListAsync();
@@ -86,7 +86,7 @@ namespace WebApplication2.Controllers
         }
 
         [HttpGet("GetAllProductsFilterByField")]
-        public async Task<IActionResult> GetAllProductsFilterByField(string filter)
+        public async Task<IActionResult> GetAllProductsFilterByField([FromQuery] int filedId)
         {
             var products = await _dbContext.Products.ToListAsync();
 
@@ -103,7 +103,7 @@ namespace WebApplication2.Controllers
                     fields.Add(new ProductCategoryFieldDto { CategoryFieldId = f.CategoryFieldId, CategoryField = f.CategoryField.FieldName, FieldValue = f.FieldValue });
                 }
 
-                if (fields.Exists(f => f.FieldValue == filter))
+                if (fields.Exists(f => f.CategoryFieldId == filedId))
                 {
                     productsWithFields.Add(new ProductFieldDto
                     {
